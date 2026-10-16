@@ -1,0 +1,21 @@
+# Render Blueprint for the API. Frontend is deployed on Vercel (see client/vercel.json).
+services:
+  - type: web
+    name: job-tracker-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      # Secrets and URLs are entered in the Render dashboard, never committed.
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+      # PORT is injected by Render; the app reads process.env.PORT.
